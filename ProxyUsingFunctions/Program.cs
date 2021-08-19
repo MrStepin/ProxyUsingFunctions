@@ -24,7 +24,6 @@ namespace ProxyUsingFunctions
             foreach (string name in Users)
                 if(nameExist(name))
                 {
-                    ReadFile();
                     print();
                 }
 
@@ -40,6 +39,7 @@ namespace ProxyUsingFunctions
 
         public static void FileRead()
         {
+            ReadFile();
             Console.WriteLine("File read!");
         }
 
