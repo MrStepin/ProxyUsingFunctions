@@ -12,6 +12,7 @@ namespace ProxyUsingFunctions
         static void Main(string[] args)
         {
             Action print = FileRead;
+            Action<string[], Action, string> checkName = Checker;
 
             string[] Users = { "Ivan", "Sergey","Vladimir", "Pavel", "Andrey" };
 
@@ -19,13 +20,7 @@ namespace ProxyUsingFunctions
 
             string userName = Console.ReadLine();
 
-            Predicate<string> nameExist = delegate (string name) { return name == userName; };
-
-            foreach (string name in Users)
-                if(nameExist(name))
-                {
-                    print();
-                }
+            checkName(Users, print(), userName);
 
             Console.ReadLine();
         }
@@ -43,6 +38,16 @@ namespace ProxyUsingFunctions
             Console.WriteLine("File read!");
         }
 
-        
+        public static void Checker(string[] Users, Action print, string userName)
+        {
+            if (Users.Contains(userName))
+            {
+                print();
+            }
+            else
+            {
+                throw new Exception ("Failed to read.");
+            }
+        }
     }
 }
