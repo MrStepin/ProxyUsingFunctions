@@ -20,7 +20,7 @@ namespace ProxyUsingFunctions
 
             string userName = Console.ReadLine();
 
-            checkName(Users, print(), userName);
+            checkName(Users, FileRead, userName);
 
             Console.ReadLine();
         }
