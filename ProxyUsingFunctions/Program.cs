@@ -11,8 +11,6 @@ namespace ProxyUsingFunctions
     {
         static void Main(string[] args)
         {
-            Action print = FileRead;
-            Action<string[], Action, string> checkName = Checker;
 
             string[] Users = { "Ivan", "Sergey","Vladimir", "Pavel", "Andrey" };
 
@@ -20,7 +18,19 @@ namespace ProxyUsingFunctions
 
             string userName = Console.ReadLine();
 
-            checkName(Users, FileRead, userName);
+            Action proxy = FileRead;
+
+            if (userName == "Ivan")
+            {
+                proxy = CreateProxy(Users, proxy, userName);
+                proxy();
+            }
+            if (userName == "Pavel")
+            {
+                proxy = CreateProxyAction(ForProxyAction, FileRead);
+                proxy();
+            }
+            FileRead();
 
             Console.ReadLine();
         }
@@ -28,8 +38,7 @@ namespace ProxyUsingFunctions
         public static void ReadFile()
         {
             StreamReader file = new StreamReader("C:\\Users\\Stas\\Desktop\\config.txt");
-            string line = file.ReadLine();
-         
+            string line = file.ReadLine();       
         }
 
         public static void FileRead()
@@ -48,6 +57,29 @@ namespace ProxyUsingFunctions
             {
                 throw new Exception ("Failed to read.");
             }
+        }
+
+        public static Action CreateProxy(string[] Users, Action print, string userName)
+        {
+            Action readFile = () =>
+            {
+                Checker(Users, print, userName);
+                Console.WriteLine("Proxy");
+            };
+            return readFile;
+        }
+
+        public static void ForProxyAction(Action print)
+        {
+            Console.WriteLine("ProxyAction");
+        }
+
+        public static Action CreateProxyAction(Action<Action> proxyAction, Action print)
+        {
+            return () =>
+            {
+                proxyAction(print);
+            };
         }
     }
 }
