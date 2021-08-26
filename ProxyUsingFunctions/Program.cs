@@ -60,7 +60,7 @@ namespace ProxyUsingFunctions
 
         public static void ReadFileConsoleLogProxy()
         {
-            Console.WriteLine("ProxyAction");
+            Console.WriteLine("ProxyAction"); 
         }
 
         public static Action CreateProxyAction(Action proxy, Action consoleLogWriter)
