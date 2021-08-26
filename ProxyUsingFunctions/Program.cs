@@ -22,7 +22,7 @@ namespace ProxyUsingFunctions
 
             if (userName == "Ivan")
             {
-                proxy = CreateProxy(Users, userName);
+                proxy = CreateProxy(proxy, Users, userName);
                 proxy();
             }
             if (userName == "Pavel")
@@ -47,13 +47,13 @@ namespace ProxyUsingFunctions
             }
         }
 
-        public static Action CreateProxy(string[] Users, string userName)
+        public static Action CreateProxy(Action proxy, string[] Users, string userName)
         {
             Action readFile = () =>
             {
                 ValidateUserAccess(Users, userName);
                 Console.WriteLine("Proxy");
-                ReadFile();   
+                proxy();
             };
             return readFile;
         }
