@@ -47,13 +47,13 @@ namespace ProxyUsingFunctions
             }
         }
 
-        public static Action CreateProxy(Action proxy, string[] Users, string userName)
+        public static Action CreateProxy(Action sourceAction, string[] Users, string userName)
         {
             Action readFile = () =>
             {
                 ValidateUserAccess(Users, userName);
                 Console.WriteLine("Proxy");
-                proxy();
+                sourceAction();
             };
             return readFile;
         }
@@ -63,12 +63,12 @@ namespace ProxyUsingFunctions
             Console.WriteLine("ProxyAction"); 
         }
 
-        public static Action CreateProxyAction(Action proxy, Action consoleLogWriter)
+        public static Action CreateProxyAction(Action sourceAction, Action proxyPostAction)
         {
             return () =>
             {
-                proxy();
-                consoleLogWriter();
+                sourceAction();
+                proxyPostAction();
             };
         }
     }

@@ -13,6 +13,8 @@ namespace Test
     {
         string[] Users = { "Ivan", "Sergey", "Vladimir", "Pavel", "Andrey" };
 
+        Action Proxy = Program.ReadFile;
+
         [Test]
         public void CheckAccessAllowed()
         {
@@ -40,7 +42,7 @@ namespace Test
         {
             string userName = "Andrey";
 
-            Assert.DoesNotThrow(() => Program.CreateProxy(Users, userName));
+            Assert.DoesNotThrow(() => Program.CreateProxy(Proxy, Users, userName));
 
         }
 
@@ -49,7 +51,7 @@ namespace Test
         {
             string userName = "Sergey";
 
-            Action proxy = Program.CreateProxy(Users, userName);
+            Action proxy = Program.CreateProxy(Proxy, Users, userName);
 
             Assert.DoesNotThrow(() => Program.CreateProxyAction(proxy, Program.ReadFileConsoleLogProxy));
         }
