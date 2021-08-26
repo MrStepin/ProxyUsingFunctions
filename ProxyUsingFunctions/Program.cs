@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProxyUsingFunctions
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -22,12 +22,12 @@ namespace ProxyUsingFunctions
 
             if (userName == "Ivan")
             {
-                proxy = CreateProxy(Users, proxy, userName);
+                proxy = CreateProxy(Users, userName);
                 proxy();
             }
             if (userName == "Pavel")
             {
-                proxy = CreateProxyAction(ReadFileConsoleLogProxy, proxy);
+                proxy = CreateProxyAction(ReadFileConsoleLogProxy);
                 proxy();
             }
 
@@ -37,37 +37,38 @@ namespace ProxyUsingFunctions
         public static void ReadFile()
         {
             StreamReader file = new StreamReader("C:\\Users\\Stas\\Desktop\\config.txt");
-            string line = file.ReadLine();       
         }
 
-        public static void ValidateUserAccess(string[] Users, Action print, string userName)
+        public static void ValidateUserAccess(string[] Users, string userName)
         {
             if (!Users.Contains(userName))
             {
                 throw new Exception("Failed to read.");
             }
+
+            ReadFile();
         }
 
-        public static Action CreateProxy(string[] Users, Action print, string userName)
+        public static Action CreateProxy(string[] Users, string userName)
         {
             Action readFile = () =>
             {
-                ValidateUserAccess(Users, ReadFile, userName);
+                ValidateUserAccess(Users, userName);
                 Console.WriteLine("Proxy");
             };
             return readFile;
         }
 
-        public static void ReadFileConsoleLogProxy(Action print)
+        public static void ReadFileConsoleLogProxy()
         {
             Console.WriteLine("ProxyAction");
         }
 
-        public static Action CreateProxyAction(Action<Action> proxyAction, Action print)
+        public static Action CreateProxyAction(Action proxyAction)
         {
             return () =>
             {
-                proxyAction(print);
+                proxyAction();
             };
         }
     }
