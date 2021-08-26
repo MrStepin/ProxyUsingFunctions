@@ -27,7 +27,7 @@ namespace ProxyUsingFunctions
             }
             if (userName == "Pavel")
             {
-                proxy = CreateProxyAction(ReadFileConsoleLogProxy);
+                proxy = CreateProxyAction(proxy, ReadFileConsoleLogProxy);
                 proxy();
             }
 
@@ -53,7 +53,7 @@ namespace ProxyUsingFunctions
             {
                 ValidateUserAccess(Users, userName);
                 Console.WriteLine("Proxy");
-                ReadFile();
+                ReadFile();   
             };
             return readFile;
         }
@@ -63,11 +63,12 @@ namespace ProxyUsingFunctions
             Console.WriteLine("ProxyAction");
         }
 
-        public static Action CreateProxyAction(Action proxyAction)
+        public static Action CreateProxyAction(Action proxy, Action consoleLogWriter)
         {
             return () =>
             {
-                proxyAction();
+                proxy();
+                consoleLogWriter();
             };
         }
     }

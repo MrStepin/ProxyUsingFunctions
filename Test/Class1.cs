@@ -49,7 +49,9 @@ namespace Test
         {
             string userName = "Sergey";
 
-            Assert.DoesNotThrow(() => Program.CreateProxyAction(Program.ReadFileConsoleLogProxy));
+            Action proxy = Program.CreateProxy(Users, userName);
+
+            Assert.DoesNotThrow(() => Program.CreateProxyAction(proxy, Program.ReadFileConsoleLogProxy));
         }
     }
 }
