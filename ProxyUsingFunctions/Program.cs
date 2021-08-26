@@ -45,8 +45,6 @@ namespace ProxyUsingFunctions
             {
                 throw new Exception("Failed to read.");
             }
-
-            ReadFile();
         }
 
         public static Action CreateProxy(string[] Users, string userName)
@@ -55,6 +53,7 @@ namespace ProxyUsingFunctions
             {
                 ValidateUserAccess(Users, userName);
                 Console.WriteLine("Proxy");
+                ReadFile();
             };
             return readFile;
         }
